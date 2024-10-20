@@ -51,10 +51,9 @@ export class UserRepository implements IUserRepository {
   }
 
   private rawSqlResponseToUserModel = (rows: QueryResultRow[]): User[] => {
-    return rows
-      .map(camelCaseObjectProperties)
-      .map(
-        (user) => new User(user.id, user.firstName, user.lastName, user.email),
-      );
+    return rows.map((row) => {
+      const user = camelCaseObjectProperties(row);
+      return new User(user.id, user.firstName, user.lastName, user.email);
+    });
   };
 }
